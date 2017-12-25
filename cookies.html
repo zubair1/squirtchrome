@@ -1,0 +1,66 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<title></title>
+<script>
+function bindEvent(element, eventName, eventHandler) {
+  if (element.addEventListener){
+      element.addEventListener(eventName, eventHandler, false);
+  } else if (element.attachEvent) {
+      element.attachEvent('on' + eventName, eventHandler);
+  }
+}  
+function getCookies(){
+	var squirtSettings = {squirt_reply:true};
+	var cookieSplit = document.cookie.split(";");
+	for(var i = 0; i < cookieSplit.length; i++){
+		var cookie = cookieSplit[i].trim();
+		var [name,value] = cookie.split("=");
+		var idx = name.indexOf("squirt_");
+		if(idx != -1) {
+			squirtSettings[name.replace(/^squirt_/, '')] = value;
+		}
+	}
+	return squirtSettings;
+}
+function setCookies(obj){
+	var cookie_string = '';
+	for (var k in obj){
+		if (obj.hasOwnProperty(k)) {
+			cookie_string += "squirt_"+k+"="+obj[k]+";"
+		}
+	}	
+	if (cookie_string.length > 0){
+		var expiration_date = new Date();
+		expiration_date.setFullYear(expiration_date.getFullYear() + 1);	
+		cookie_string += " path=/; expires=" + expiration_date.toUTCString();
+		document.cookie = cookie_string;
+	}
+}
+bindEvent(window, 'message', function (e) {
+    var msg = e.data;
+	if (typeof msg == "object" && msg.squirt_request){
+		if (msg.squirt_request == "getCookies"){
+			window.parent.postMessage(getCookies(), '*');	
+		}		
+		if (msg.squirt_request == "setCookies" && msg.obj){
+			setCookies(msg.obj);
+		}			
+	}
+});
+window.onload = function() {
+	let cookies = getCookies();
+	let cookieSpan = document.createElement('div');
+	let cookieText = '';
+	for (var k in cookies){
+		if (cookies.hasOwnProperty(k)) {
+			cookieText += k +'='+cookies[k]+'<br>';
+		}
+	}		
+	cookieSpan.innerHTML = cookieText;
+	document.body.appendChild(cookieSpan);
+}
+</script>
+</head>
+<body></body>
+</html>

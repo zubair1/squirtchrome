@@ -1,0 +1,39 @@
+{
+	"name": "Squirt",
+	"version": "2.1",
+	"manifest_version": 2,
+	"description": "Read web pages really fast",
+	"icons": {
+	  "128": "images/editable-icon.png"
+	},
+	"browser_action": {
+		"default_icon": "images/logo19.png",
+		"default_title": "Squirt"
+	},
+	"background": {
+		"persistent": false,
+		"scripts": [ 
+			"background.js"
+		]
+	},
+	"content_scripts": [
+	{
+		"matches": ["*://*/*"],
+		"js": ["keyboard.js"]
+	}
+	],
+	"web_accessible_resources": [
+		"keyboard.js",
+		"squirt.js",
+		"cookie.js",
+		"readability.js",
+		"cookies.html",
+		"squirt.css",
+		"font-awesome.css"
+	],
+	"permissions": [
+		"tabs", "http://*/*", "https://*/*"
+	],
+	"key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAhLffpVj/eeaurQNwFsQbOEw7o+eq8dEOAmnEoNKX3Z09W934ztHeycd3//UgJRgymTWLrJEdP1FSDxk34EEp/gX6Wds28pCBu2TJsBaFFFlX5oENqHOmokm45IdW9b04BNo886dFZzBISHqcubAzD69DDzdZahquNVa+a3jFJn0f34KzECjuOv4CsS0ewbH23q+N/saYKna4BPD7ulHix/S/wWMuD2gI0+UgprbPAF8auwnFhUWkzpcxl7MMa67Hgk3sNNCi7S8CKMt53p4WMWImR79Ezi3l2oIEq3hFobb47xJ0gBOwyyG2eUV8BPYq+6rqGbAfHg384dkSg6krwwIDAQAB",
+	"update_url": "https://clients2.google.com/service/update2/crx"
+}
