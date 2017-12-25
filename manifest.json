@@ -29,7 +29,11 @@
 		"readability.js",
 		"cookies.html",
 		"squirt.css",
-		"font-awesome.css"
+		"font-awesome.css",
+		"fonts/fontawesome-webfont.eot",
+		"fonts/fontawesome-webfont.ttf",
+		"fonts/fontawesome-webfont.woff",
+		"fonts/fontawesome-webfont.svg"
 	],
 	"permissions": [
 		"tabs", "http://*/*", "https://*/*"
