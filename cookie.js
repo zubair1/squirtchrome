@@ -43,3 +43,16 @@ bindEvent(window, 'message', function (e) {
 		}			
 	}
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+	let cookies = getCookies();
+	let cookieSpan = document.createElement('div');
+	let cookieText = '';
+	for (var k in cookies){
+		if (cookies.hasOwnProperty(k)) {
+			cookieText += k +'='+cookies[k]+'<br>';
+		}
+	}		
+	cookieSpan.innerHTML = cookieText;
+	document.body.appendChild(cookieSpan);
+});

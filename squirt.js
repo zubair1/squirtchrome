@@ -1,8 +1,8 @@
 var sq = window.sq;
 sq.version = '0.0.1';
-sq.host =  window.sq.extpath;
+sq.host =  sq.extpath;
 sq.cookies = {
-	loader: sq.host + 'cookie.js',
+	loader: sq.host + 'cookies.html',
 	timeout: 3000,
 	values: false
 };
