@@ -193,6 +193,22 @@ sq.progressBarLocation = sq.progressBarLocation || 'bottom';
 			toggle(finalWordContainer);
 		}				
       });
+      on('squirt.forward', function(e){	   	  
+        // Rewind by `e.value` seconds. Then walk back to the
+        // beginning of the sentence.
+        !sq.paused && clearTimeout(nextNodeTimeoutId);
+        incrememntNodeIdx(Math.floor(e.seconds * 1000 / intervalMs));
+        while(!nodes[nodeIdx].word.match(/\./) && nodeIdx < 0){
+          incrememntNodeIdx(-1);
+        }
+        nextNode(true);
+		let finalWordContainer = document.querySelector('.sq .final-word');
+		let finalStyle = window.getComputedStyle(finalWordContainer);
+		if (finalStyle.display == 'block'){
+			toggle(document.querySelector('.sq .reader'));
+			toggle(finalWordContainer);
+		}				
+      });
       on('squirt.seek', function(e){	  
         !sq.paused && clearTimeout(nextNodeTimeoutId);
 		let targetNode = percentageToNode(e.percentage);
@@ -482,7 +498,8 @@ sq.progressBarLocation = sq.progressBarLocation || 'bottom';
       27: dispatch.bind(null, 'squirt.close'),
       38: dispatch.bind(null, 'squirt.wpm.adjust', {value: 10}),
       40: dispatch.bind(null, 'squirt.wpm.adjust', {value: -10}),
-      37: dispatch.bind(null, 'squirt.rewind', {seconds: 10})
+	  37: dispatch.bind(null, 'squirt.rewind', {seconds: 10}),
+      39: dispatch.bind(null, 'squirt.forward', {seconds: 10})
   };
 
   function handleKeypress(e){
